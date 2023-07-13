@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Detalle compra</title>
+    {% load static %}
+    <link rel="icon" href="{% static 'img/fundacion/logofoot.png' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/estilos.css' %}" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            const total = parseInt($('#subtotal').text());
+            const iva = Math.round(total*0.19);
+            const envio = Math.round(total*0.1);
+            $('#total').text(total+iva+envio);
+            $('#iva').text(iva);
+            $('#envio').text(envio);
+        });
+    </script>
+</head>
+
+<body style="background-color: #FFEADB">
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <a class="navbar-brand" href="{% url 'inicio' %}">
+                <img src="{% static 'img/fundacion/logofoot.png' %}" width="30px" height="30px">
+            </a>
+            {% if user.is_authenticated %}
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'inicio' %}">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'qsomos' %}">Fundacion</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'productos' %}">Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Bienvenid@ {{user.username}}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'gestion' %}">GESTION</a>
+                </li>
+            </ul>
+
+            {% else %}
+
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'inicio' %}">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'qsomos' %}">Fundacion</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'productos' %}">Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contactanos' %}">Contactanos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'registrar' %}">Registrarse</a>
+                </li>
+
+            </ul>
+
+            {% endif %}
+
+
+            <form class="form-inline mt-2 mt-md-0">
+                <a class="navbar-brand" href="{% url 'carrito' %}">
+                    <img src="{% static 'img/interface/carrito.png' %} " alt="logoBookStop" width="40px">
+                </a>
+
+            </form>
+
+            <div>
+                {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}" id="userBookstop">
+                    <img src="{% static 'img/user-vector-icon.png' %}" alt="userBookStop" width="20px">Cerrar Sesión
+                </a>
+
+
+                {% else %}
+
+                <a href="{% url 'login' %}" id="userBookStop">
+                    <img src="{% static 'img/user-vector-icon.png' %}" alt="userBookStop" width="20px">Iniciar Sesión
+                </a>
+                {% endif %}
+            </div>
+
+
+
+        </div>
+    </nav><!--cierre de menú-->
+
+    <div>
+        <hr>
+        <br>
+    </div>
+
+    <body>
+        <div class="container">
+          <div class="banner- col text-center mt-4">
+              <img src="{% static 'img/fundacion/logofoot.png' %}" width="200px" height="200px">
+          </div> 
+          <hr>
+          <h3 class="text-center">Boleta Electronica</h3>
+          <h6 class="text-center">Fecha: {{ fecha }}</h6>
+          <hr>
+          <table class="table">
+            <thead class="thead-light">
+              <tr>
+                <th>Código Boleta</th>
+                <th>ID Producto</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for prod in productos %}
+              <tr>
+                <td>{{ prod.id_boleta }}</td>
+                <td>{{ prod.id_producto }}</td>
+                <td>{{ prod.cantidad }}</td>
+                <td>${{ prod.subtotal }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <hr>
+          <table class="table">
+              <tbody>
+              <tr>
+                  <td><h6>Subtotal:</h6></td>
+                  <td>$<span id="subtotal">{{ total }}</span></td>
+                  <td><h6>IVA:</h6></td>
+                  <td>$<span id="iva">{{ total }}</span></td>
+              </tr>
+              <tr>
+                  <td><h6>Envío:</h6></td>
+                  <td>$<span id="envio">{{ total }}</span></td>
+                  <td><h6>Total Compra:</h6></td>
+                  <td>$<span id="total">{{ total }}</span></td>
+              </tr>
+              </tbody>
+          </table>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+    </body>
+
+
+
+
+
+
+
+
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex-grow: 1;
+        }
+
+        footer {
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 20px;
+            margin-top: auto;
+            text-align: center;
+        }
+    </style>
+
+    <footer class="bg-dark text-white ">
+        <div class="container">
+            <div class="row" style="color: beige;">
+                <div class="col-md-3 text-uppercase d-flex align-items-center">
+                    <a href="#" class="text-reset">
+                        <img src="{% static 'img/fundacion/logofoot.png' %}" width="170px" height="170px"
+                            alt="logo weston" class="img-logo mr-2">
+                    </a>
+                </div>
+                <div class="col-md-3 col-6">
+                    <h5 class="font-weight-bold text-uppercase">Legals</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-reset">About Us</a></li>
+                        <li><a href="#" class="text-reset">Privacy Policy</a></li>
+                        <li><a href="#" class="text-reset">Cookies Policy</a></li>
+                        <li class="text-reset">@copyright DuocUC</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 col-6">
+                    <h5 class="font-weight-bold text-uppercase">Contactanos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'contactanos' %}" class="text-reset">+56 9 7642 7578</a></li>
+                        <li><a href="{% url 'contactanos' %}" class="text-reset">Petfriendly@gmail.com</a></li>
+                        <li><a href="{% url 'contactanos' %}" class="text-reset">Tinaja 2014 Region Metropolitana.
+                                Chile</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-3 col-12">
+                    <h5 class="font-weight-bold text-uppercase">Siguenos</h5>
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="https://www.instagram.com" class="text-reset">
+                                <img src="{% static 'img/Instagram.png' %}" alt="" width="30px" height="30px"
+                                    style=" margin-left: 10px;">
+                            </a>
+                            <a href="https://facebook.com" class="text-reset">
+                                <img src="{% static 'img/2000px-Facebook_font_awesome.svg.png' %}" alt="" width="30px"
+                                    height="30px" style=" margin-left: 15px;">
+                            </a>
+                            <a href="https://twitter.com/home" class="text-reset">
+                                <img src="{% static 'img/twitter.png' %}" alt="" width="30px" height="30px"
+                                    style=" margin-left: 10px;">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+</body>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+
+
+</html>
