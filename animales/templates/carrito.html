@@ -42,9 +42,11 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Bienvenid@ {{user.username}}</a>
         </li>
+        {% if user.is_staff %}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'gestion' %}">GESTION</a>
         </li>
+        {% endif %}
       </ul>
 
       {% else %}
@@ -96,9 +98,10 @@
 
 
     </div>
-  </nav><!--cierre de menú-->
+  </nav>
+  <!--cierre de menú-->
 
-  
+
   <div class="container">
     <br>
     <br>
@@ -108,7 +111,7 @@
 
   <div class="container">
     <h2 class="text-center">Carrito</h2>
-  
+
     <table class="table">
       <thead class="thead-light">
         <tr>
@@ -117,9 +120,9 @@
           <th>Unidades</th>
           <th>Precio</th>
           <th>Acciones</th>
-        </tr>        
+        </tr>
       </thead>
-  
+
       <tbody>
         {% if request.session.carrito.items %}
         {% for key, value in request.session.carrito.items %}
@@ -150,92 +153,91 @@
       </tbody>
     </table>
   </div>
-  
+
 
   <div class="row text-center">
     <div class="col-6">
-        <a href="{% url 'limpiar' %}" class="btn btn-dark">Limpiar</a> 
-       </div> 
-       <div class="col-6">
-        <a href="{% url 'generarBoleta' %}" class="btn btn-success">Comprar</a>
+      <a href="{% url 'limpiar' %}" class="btn btn-dark">Limpiar</a>
     </div>
-</div>
+    <div class="col-6">
+      <a href="{% url 'generarBoleta' %}" class="btn btn-success">Comprar</a>
+    </div>
+  </div>
 
-  
+
 
 
 
   <!--FOOTER-->
   <style>
     body {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
     main {
-        flex-grow: 1;
+      flex-grow: 1;
     }
 
     footer {
-        background-color: #343a40;
-        color: #ffffff;
-        padding: 20px;
-        margin-top: auto;
-        text-align: center;
+      background-color: #343a40;
+      color: #ffffff;
+      padding: 20px;
+      margin-top: auto;
+      text-align: center;
     }
-</style>
+  </style>
 
-<footer class="bg-dark text-white ">
+  <footer class="bg-dark text-white ">
     <div class="container">
-        <div class="row" style="color: beige;">
-            <div class="col-md-3 text-uppercase d-flex align-items-center">
-                <a href="#" class="text-reset">
-                    <img src="{% static 'img/fundacion/logofoot.png' %}" width="170px" height="170px"
-                        alt="logo weston" class="img-logo mr-2">
-                </a>
-            </div>
-            <div class="col-md-3 col-6">
-                <h5 class="font-weight-bold text-uppercase">Legals</h5>
-                <ul class="list-unstyled">
-                    <li><a href="#" class="text-reset">About Us</a></li>
-                    <li><a href="#" class="text-reset">Privacy Policy</a></li>
-                    <li><a href="#" class="text-reset">Cookies Policy</a></li>
-                    <li class="text-reset">@copyright DuocUC</a></li>
-                </ul>
-            </div>
-            <div class="col-md-3 col-6">
-                <h5 class="font-weight-bold text-uppercase">Contactanos</h5>
-                <ul class="list-unstyled">
-                    <li><a href="{% url 'contactanos' %}" class="text-reset">+56 9 7642 7578</a></li>
-                    <li><a href="{% url 'contactanos' %}" class="text-reset">Petfriendly@gmail.com</a></li>
-                    <li><a href="{% url 'contactanos' %}" class="text-reset">Tinaja 2014 Region Metropolitana.
-                            Chile</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-md-3 col-12">
-                <h5 class="font-weight-bold text-uppercase">Siguenos</h5>
-                <ul class="list-unstyled">
-                    <li>
-                        <a href="https://www.instagram.com" class="text-reset">
-                            <img src="{% static 'img/Instagram.png' %}" alt="" width="30px" height="30px"
-                                style=" margin-left: 10px;">
-                        </a>
-                        <a href="https://facebook.com" class="text-reset">
-                            <img src="{% static 'img/2000px-Facebook_font_awesome.svg.png' %}" alt="" width="30px"
-                                height="30px" style=" margin-left: 15px;">
-                        </a>
-                        <a href="https://twitter.com/home" class="text-reset">
-                            <img src="{% static 'img/twitter.png' %}" alt="" width="30px" height="30px"
-                                style=" margin-left: 10px;">
-                        </a>
-                    </li>
-                </ul>
-            </div>
+      <div class="row" style="color: beige;">
+        <div class="col-md-3 text-uppercase d-flex align-items-center">
+          <a href="#" class="text-reset">
+            <img src="{% static 'img/fundacion/logofoot.png' %}" width="170px" height="170px" alt="logo weston"
+              class="img-logo mr-2">
+          </a>
         </div>
+        <div class="col-md-3 col-6">
+          <h5 class="font-weight-bold text-uppercase">Legals</h5>
+          <ul class="list-unstyled">
+            <li><a href="#" class="text-reset">About Us</a></li>
+            <li><a href="#" class="text-reset">Privacy Policy</a></li>
+            <li><a href="#" class="text-reset">Cookies Policy</a></li>
+            <li class="text-reset">@copyright DuocUC</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3 col-6">
+          <h5 class="font-weight-bold text-uppercase">Contactanos</h5>
+          <ul class="list-unstyled">
+            <li><a href="{% url 'contactanos' %}" class="text-reset">+56 9 7642 7578</a></li>
+            <li><a href="{% url 'contactanos' %}" class="text-reset">Petfriendly@gmail.com</a></li>
+            <li><a href="{% url 'contactanos' %}" class="text-reset">Tinaja 2014 Region Metropolitana.
+                Chile</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-3 col-12">
+          <h5 class="font-weight-bold text-uppercase">Siguenos</h5>
+          <ul class="list-unstyled">
+            <li>
+              <a href="https://www.instagram.com" class="text-reset">
+                <img src="{% static 'img/Instagram.png' %}" alt="" width="30px" height="30px"
+                  style=" margin-left: 10px;">
+              </a>
+              <a href="https://facebook.com" class="text-reset">
+                <img src="{% static 'img/2000px-Facebook_font_awesome.svg.png' %}" alt="" width="30px" height="30px"
+                  style=" margin-left: 15px;">
+              </a>
+              <a href="https://twitter.com/home" class="text-reset">
+                <img src="{% static 'img/twitter.png' %}" alt="" width="30px" height="30px" style=" margin-left: 10px;">
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-</footer>
+  </footer>
 
 
 
@@ -243,12 +245,8 @@
 
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-crossorigin="anonymous"></script>
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-crossorigin="anonymous"></script>
+  integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
 <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-
-
